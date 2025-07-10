@@ -21,14 +21,14 @@ from pymongo import MongoClient
 import io
 
 # ====== CONFIG ======
-OPENROUTER_KEY = "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"
-TELEGRAM_BOT_TOKEN = "7994608495:AAElHCdIN_DAa4NxC7GB38Tbff0g3BUUSRE"
-MONGO_URI = "mongodb+srv://eppakayalasathvik72:KGx0Qc6DYQGSlcSx@phantom-protocol.nnjlk6r.mongodb.net/"
+OPENROUTER_KEY = "API_KEY"
+TELEGRAM_BOT_TOKEN = "BOT_TOKEN"
+MONGO_URI = "Phantom-protocol URI"
 MONGO_DB = "Phantom-Protocol"
 MONGO_COLLECTION = "contacts"
 FEEDBACK_COLLECTION = "feedback"
-ASSEMBLYAI_API_KEY = "bf95844c56d0491785be9d45507a53df"
-OCR_SPACE_API_KEY = "K88346993088957"
+ASSEMBLYAI_API_KEY = "ASSEMBLY"
+OCR_SPACE_API_KEY = "OCR_KEY"
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO,
