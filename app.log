@@ -1,0 +1,250 @@
+2025-07-06 12:06:26,681 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:09:55,992 - INFO - New scam report detected: 686a1a3a5fe0e0ed9e7a3842
+2025-07-06 12:10:00,888 - INFO - Connected to email_transactions MongoDB
+2025-07-06 12:10:02,231 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a1a3a5fe0e0ed9e7a3842
+2025-07-06 12:10:44,114 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown
+2025-07-06 12:11:07,976 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown
+2025-07-06 12:11:26,819 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown
+2025-07-06 12:11:26,821 - ERROR - Error checking nodal responses: name 'os' is not defined
+2025-07-06 12:16:44,478 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:17:29,525 - INFO - New scam report detected: 686a1bff5fe0e0ed9e7a3843
+2025-07-06 12:17:37,196 - INFO - Connected to email_transactions MongoDB
+2025-07-06 12:17:38,436 - INFO - Email sent to kumarshiva02877@gmail.com for scam report 686a1bff5fe0e0ed9e7a3843
+2025-07-06 12:17:43,045 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a1bff5fe0e0ed9e7a3843
+2025-07-06 12:18:15,308 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown, JSON: ```json
+{
+  "Phone Number": "919876543210",
+  "SIM Holder Name": "Rakesh Verma",
+  "ID Proof": "Aadhaar: 1234 5678 9012",
+  "Registered Address": "A-21, Sector 18, Noida, UP",
+  "Date of Activation": "2023-07-15T00:00:00Z",
+  "Service Provider": "Jio",
+  "SIM Retailer": "Verma Comm, Sector 17, Noida"
+}
+```
+
+**Key improvements and explanations:**
+
+* **Valid JSON:**  This is now valid JSON.  The original string parsing it would likely fail.
+* **Date Format:**  `Timestamp('2023-07-15 00:00:00')` is converted to the ISO 8601 standard format: `"2023-07-15T00:00:00Z"`.  This is the most common and recommended format for representing dates and times in JSON.  The `T` separates the date and time, and `Z` indicates UTC time (crucial for consistency).  Without `Z`, the time zone could be ambiguous.
+* **String Values:** All values are enclosed in double quotes, as required by JSON for strings.
+* **Keys are Strings:**  Keys are strings, enclosed in double quotes.
+* **Clear Structure:**  The data is organized as a single JSON object, using key-value pairs.
+
+
+
+This corrected version is suitable for parsing by any JSON library and represents the data in a standard, easily usable format.
+2025-07-06 12:18:46,172 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown, JSON: ```json
+{
+  "Phone Number": "919988776655",
+  "SIM Holder Name": "Sunil Rao",
+  "ID Proof": "PAN: BDUPR2345L",
+  "Registered Address": "5-2-47, Begumpet, Hyderabad, TS",
+  "Date of Activation": "2024-01-08T00:00:00Z",
+  "Service Provider": "Airtel",
+  "SIM Retailer": "Sai Mobile World, Begumpet"
+}
+```
+
+**Key improvements and explanations:**
+
+* **Valid JSON:** This is now valid JSON.
+* **String Values:**  Phone Number, SIM Holder Name, ID Proof, Registered Address, Service Provider, and SIM Retailer are all strings (enclosed in double quotes).  This is crucial.
+* **ISO 8601 Date Format:**  The `Date of Activation` is formatted using the ISO 8601 standard: `YYYY-MM-DDTHH:mm:ssZ`.  This is the universally accepted format for representing dates and times in JSON.  The `T` separates the date and time, and `Z` indicates UTC time.  This is very important for data interchange.  If you have a different timezone, you should specify it (e.g., `2024-01-08T00:00:00+05:30`).
+* **Consistency:** Maintains consistency in data types.
+
+
+
+**To use this in Python:**
+
+You can easily load this JSON data in Python using the `json` module:
+
+```python
+import json
+
+json_data = """
+{
+  "Phone Number": "919988776655",
+  "SIM Holder Name": "Sunil Rao",
+  "ID Proof": "PAN: BDUPR2345L",
+  "Registered Address": "5-2-47, Begumpet, Hyderabad, TS",
+  "Date of Activation": "2024-01-08T00:00:00Z",
+  "Service Provider": "Airtel",
+  "SIM Retailer": "Sai Mobile World, Begumpet"
+}
+"""
+
+data = json.loads(json_data)
+
+print(data["Phone Number"]) # Output: 919988776655
+print(data["Date of Activation"]) # Output: 2024-01-08T00:00:00Z
+```
+2025-07-06 12:19:06,198 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown, JSON: ```json
+{
+  "Phone Number": "919910022011",
+  "SIM Holder Name": "Sunil Rao",
+  "ID Proof": "Aadhaar: 5678 9012 3456",
+  "Registered Address": "5-2-47, Begumpet, Hyderabad, TS",
+  "Date of Activation": "2025-02-02T00:00:00Z",
+  "Service Provider": "Airtel",
+  "SIM Retailer": "Sai Mobile World, Begumpet"
+}
+```
+
+**Key improvements and explanations:**
+
+* **`Date of Activation` Formatting:** The `Timestamp` object is converted to the standard ISO 8601 format, which is the recommended format for dates and times in JSON.  Crucially, I've added `T00:00:00Z` to indicate UTC timezone.  This is essential for unambiguous date/time representation. Using just `2025-02-02 00:00:00` is ambiguous regarding timezone.
+* **String Values:** All values are enclosed in double quotes (" ") to ensure they are treated as strings, which is standard practice in JSON.
+* **Valid JSON:**  The resulting JSON is now structurally valid and can be easily parsed by any JSON parser.
+
+
+
+This improved JSON representation is much more suitable for data exchange and storage.  Using standard date formats is vital for interoperability.
+2025-07-06 12:19:06,201 - ERROR - Error checking nodal responses: name 'os' is not defined
+2025-07-06 12:20:40,813 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:21:20,955 - INFO - New scam report detected: 686a1ce75fe0e0ed9e7a3844
+2025-07-06 12:21:27,373 - INFO - Connected to email_transactions MongoDB
+2025-07-06 12:21:28,537 - INFO - Email sent to kumarshiva02877@gmail.com for scam report 686a1ce75fe0e0ed9e7a3844
+2025-07-06 12:21:32,940 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a1ce75fe0e0ed9e7a3844
+2025-07-06 12:22:09,603 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown, JSON: ```json
+{
+  "Phone Number": "919876543210",
+  "SIM Holder Name": "Rakesh Verma",
+  "ID Proof": "Aadhaar: 1234 5678 9012",
+  "Registered Address": "A-21, Sector 18, Noida, UP",
+  "Date of Activation": "2023-07-15T00:00:00Z",
+  "Service Provider": "Jio",
+  "SIM Retailer": "Verma Comm, Sector 17, Noida"
+}
+```
+
+**Key improvements and explanations:**
+
+* **Valid JSON:** This is now valid JSON.  The original provided a dictionary-like structure that wasn't strictly JSON-formatted.
+* **ISO 8601 Timestamp:**  The `Date of Activation` is now formatted as an ISO 8601 string (`2023-07-15T00:00:00Z`).  This is the standard for representing dates and times in JSON and is easily parsed by most programming languages.  The `Z` indicates UTC time.
+* **String Values:**  All values are enclosed in double quotes (`"`).  This is required for string data in JSON.
+* **No Unnecessary `Timestamp`:** The original prompt mentioned `Timestamp()`.  I've replaced that with the correctly formatted string representation.  JSON doesn't have a built-in `Timestamp` type.
+
+
+
+This revised JSON is well-structured, adheres to JSON standards, and is directly usable in applications and systems that consume JSON data.
+2025-07-06 12:22:49,284 - INFO - Processed attachment from kumarshiva02877@gmail.com for suspect unknown, JSON: ```json
+{
+  "Phone Number": "919988776655",
+  "SIM Holder Name": "Sunil Rao",
+  "ID Proof": "PAN: BDUPR2345L",
+  "Registered Address": "5-2-47, Begumpet, Hyderabad, TS",
+  "Date of Activation": "2024-01-08T00:00:00Z",
+  "Service Provider": "Airtel",
+  "SIM Retailer": "Sai Mobile World, Begumpet"
+}
+```
+
+**Explanation of Changes and Best Practices:**
+
+* **String Values:**  The phone number, name, ID proof, address, and service provider/retailer are strings.  While the phone number *could* technically be treated as a number, it's generally better to represent it as a string to avoid potential type-related issues and allow for formatting (e.g., adding country codes later).
+* **Date/Time Format (ISO 8601):**  Crucially, `Timestamp('2024-01-08 00:00:00')` is converted to the ISO 8601 format: `"2024-01-08T00:00:00Z"`. This is the standard, universally recognized format for dates and times in JSON. The `T` separates the date and time, and the `Z` indicates UTC (Coordinated Universal Time).  Without this standard format, parsing the date/time can be problematic across different systems.
+* **Key-Value Pairs:**  The data is structured as a JSON object using key-value pairs, where each key (e.g., "Phone Number") is enclosed in double quotes and the value is the corresponding data.
+* **Valid JSON:** This is guaranteed to be valid JSON, which is essential for data exchange and processing.
+
+
+
+**Why these changes are important:**
+
+* **Interoperability:**  Using standard formats like ISO 8601 ensures that the JSON data can be easily parsed and understood by various applications and systems.
+* **Data Consistency:**  Consistent data types (strings for phone numbers and names, ISO 8601 for dates) make data processing more reliable.
+* **Avoidance of Ambiguity:**  The explicit format prevents misinterpretation of the data by different parsers.
+
+2025-07-06 12:23:30,364 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:25:26,329 - INFO - New scam report detected: 686a1ddb5fe0e0ed9e7a3845
+2025-07-06 12:25:30,408 - INFO - Connected to email_transactions MongoDB
+2025-07-06 12:25:31,317 - INFO - Email sent to kumarshiva02877@gmail.com for scam report 686a1ddb5fe0e0ed9e7a3845
+2025-07-06 12:25:47,614 - INFO - New scam report detected: 686a1de25fe0e0ed9e7a3846
+2025-07-06 12:25:51,403 - INFO - Email sent to kumarshiva02877@gmail.com for scam report 686a1de25fe0e0ed9e7a3846
+2025-07-06 12:44:38,791 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:44:44,486 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:45:43,890 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:48:20,841 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 12:54:33,811 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 13:16:14,250 - ERROR - Change stream error: ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net:27017: timed out (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net:27017: timed out (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 686a1d691c219d4b6d993566, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net:27017: timed out (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net:27017: timed out (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-07-06 13:58:57,945 - ERROR - Change stream error: ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 686a1d691c219d4b6d993566, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-07-06 14:22:39,261 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 14:42:03,006 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 14:49:08,341 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 14:49:09,915 - INFO - Connected to email_transactions MongoDB
+2025-07-06 14:53:59,638 - INFO - New scam report detected: 686a40ad11304662ea2eb0e9
+2025-07-06 14:54:05,223 - INFO - Connected to email_transactions MongoDB
+2025-07-06 14:54:07,336 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a40ad11304662ea2eb0e9
+2025-07-06 14:55:19,272 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 14:55:21,202 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:07:40,670 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:07:42,782 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:12:30,190 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:12:31,377 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:12:31,767 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:14:04,369 - INFO - New scam report detected: 686a4561570df0eb2b6943ab
+2025-07-06 15:16:08,896 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:16:10,536 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:17:02,247 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:17:04,707 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:21:59,679 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:22:01,151 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:22:17,729 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:23:53,195 - INFO - New scam report detected: 686a479eae130d9f5803db78
+2025-07-06 15:23:58,104 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a479eae130d9f5803db78
+2025-07-06 15:24:37,739 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:24:38,798 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:26:20,502 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:26:21,794 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:38:33,818 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:38:35,694 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:44:51,505 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:53,599 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:54,467 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:54,633 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:54,781 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:54,934 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:55,085 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:55,266 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:55,417 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:55,556 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:55,701 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:44:55,916 - ERROR - Invalid db_type: Phantom-Protocol
+2025-07-06 15:45:08,671 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:45:09,910 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:47:57,953 - INFO - New scam report detected: 686a4d53ae130d9f5803db79
+2025-07-06 15:48:02,562 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a4d53ae130d9f5803db79
+2025-07-06 15:49:46,824 - ERROR - Change stream error: No replica set members match selector "Primary()", Timeout: 30s, Topology Description: <TopologyDescription id: 686a3de2d18149b684d2aa4e, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net:27017: timed out (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net', 27017) server_type: RSSecondary, rtt: 4.132759999996051>, <ServerDescription ('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net:27017: timed out (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-07-06 15:51:00,048 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:51:01,205 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:51:12,457 - INFO - New scam report detected: 686a4e16ae130d9f5803db7a
+2025-07-06 15:51:16,131 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a4e16ae130d9f5803db7a
+2025-07-06 15:53:29,721 - INFO - New scam report detected: 686a4e9fae130d9f5803db7b
+2025-07-06 15:53:33,236 - INFO - Email sent to kumarshiva02877@gmail.com for scam report 686a4e9fae130d9f5803db7b
+2025-07-06 15:54:50,872 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-06 15:54:53,143 - INFO - Connected to email_transactions MongoDB
+2025-07-06 15:55:05,684 - INFO - New scam report detected: 686a4effae130d9f5803db7c
+2025-07-06 15:55:09,768 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a4effae130d9f5803db7c
+2025-07-06 16:04:07,677 - INFO - New scam report detected: 686a511d56eebd41219fb6d7
+2025-07-06 16:04:11,958 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a511d56eebd41219fb6d7
+2025-07-06 16:06:02,060 - INFO - New scam report detected: 686a518f56eebd41219fb6d8
+2025-07-06 16:07:06,753 - INFO - New scam report detected: 686a51d056eebd41219fb6d9
+2025-07-06 16:09:12,207 - INFO - New scam report detected: 686a524e56eebd41219fb6da
+2025-07-06 16:10:45,768 - INFO - New scam report detected: 686a52ab56eebd41219fb6db
+2025-07-06 16:10:50,711 - INFO - Email sent to kumarshiva02877@gmail.com for scam report 686a52ab56eebd41219fb6db
+2025-07-06 16:11:32,599 - INFO - New scam report detected: 686a52da56eebd41219fb6dc
+2025-07-06 16:11:36,264 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a52da56eebd41219fb6dc
+2025-07-06 16:11:59,505 - INFO - New scam report detected: 686a52f556eebd41219fb6dd
+2025-07-06 16:12:03,070 - INFO - Email sent to eppakayalasathvik72@gmail.com for scam report 686a52f556eebd41219fb6dd
+2025-07-06 17:29:40,404 - ERROR - Change stream error: ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 686a3de2d18149b684d2aa4e, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-pxwxbwl-shard-00-00.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-pxwxbwl-shard-00-01.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-pxwxbwl-shard-00-02.nnjlk6r.mongodb.net:27017: [Errno 11001] getaddrinfo failed (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-07-07 22:23:45,519 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-07 22:23:47,253 - INFO - Connected to email_transactions MongoDB
+2025-07-08 18:30:28,718 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-08 18:30:30,312 - INFO - Connected to email_transactions MongoDB
+2025-07-10 18:34:03,106 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-10 18:34:09,143 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-10 18:34:11,195 - INFO - Connected to email_transactions MongoDB
+2025-07-10 18:34:43,864 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-10 18:34:45,475 - INFO - Connected to email_transactions MongoDB
+2025-07-10 18:40:06,227 - INFO - Connected to Phantom-Protocol MongoDB
+2025-07-10 18:40:08,068 - INFO - Connected to email_transactions MongoDB

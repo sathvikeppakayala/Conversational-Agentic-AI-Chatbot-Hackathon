@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTO CRPC Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+    </style>
+</head>
+<body style="background: #f0f0f0; font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; box-sizing: border-box;">
+    <div style="display: flex; flex: 1; width: 100vw; box-sizing: border-box;">
+        <div id="nav-pane" style="width: 200px; background: #2C3E50; color: white; padding: 20px; min-height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+            <h3 style="margin: 0 0 20px; color: white;">Navigation</h3>
+            <a href="/dashboard" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Dashboard</a>
+            <a href="/all_scammers" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">All Scammers</a>
+            <a href="/all_emails" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">All Emails</a>
+            <a href="#" onclick="showReportsModal()" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Reports</a>
+            <a href="/logout" style="display: block; color: white; padding: 10px; margin-top: auto; background: #FF4C4C; border-radius: 3px; text-decoration: none;">Logout</a>
+        </div>
+        <div style="flex: 1; background: white; padding: 20px; overflow-y: auto; box-sizing: border-box;">
+            <h1 style="color: #333; text-align: center; margin-bottom: 20px;">AUTO CRPC Dashboard</h1>
+            <form action="/dashboard" method="GET" style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="search" placeholder="Search by User, UPI, Phone, Account, or Social" style="width: 70%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" value="{{ search_query|default('') }}">
+                <button type="submit" style="padding: 8px 15px; background: #4caf50; color: white; border: none; border-radius: 3px; cursor: pointer;">Search</button>
+            </form>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div>
+                    <h2 style="color: #333; margin-bottom: 15px;">Found Scammers</h2>
+                    <div style="max-height: 25vh; overflow-y: auto;">
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            {% for scammer in scammers %}
+                            <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 3px;" onmouseover="this.style.background='#E6E6FA'" onmouseout="this.style.background='#f9f9f9'">
+                                <p style="margin: 5px 0;"><strong>User:</strong> {{ scammer.user }}</p>
+                                <p style="margin: 5px 0;"><strong>Text:</strong> {{ scammer.text|truncate(50) }}</p>
+                                <p style="margin: 5px 0;"><strong>Risk Score:</strong> {{ scammer.risk_score }}</p>
+                                <div style="margin-top: 10px;">
+                                    <p style="margin: 5px 0;"><strong>UPI IDs:</strong> {{ scammer.upi_ids|join(', ') or 'None' }}</p>
+                                    <p style="margin: 5px 0;"><strong>Phones:</strong> {{ scammer.phones|join(', ') or 'None' }}</p>
+                                    <p style="margin: 5px 0;"><strong>Account Numbers:</strong> {{ scammer.account_numbers|join(', ') or 'None' }}</p>
+                                    <p style="margin: 5px 0;"><strong>Socials:</strong> {{ scammer.socials|join(', ') or 'None' }}</p>
+                                    <p style="margin: 5px 0;"><strong>Date:</strong> {{ scammer.datetime }}</p>
+                                </div>
+                            </div>
+                            {% else %}
+                            <p style="color: #555; text-align: center;">No scammers found.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a href="/all_scammers" style="background: #4285f4; color: white; padding: 10px 20px; border-radius: 3px; text-decoration: none; font-weight: bold;">Show More</a>
+                    </div>
+                </div>
+                <div>
+                    <h2 style="color: #333; margin-bottom: 15px;">Email Statistics</h2>
+                    <div style="max-height: 25vh; overflow-y: auto;">
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            {% for email in emails %}
+                            <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 3px;" onmouseover="this.style.background='#E6E6FA'" onmouseout="this.style.background='#f9f9f9'">
+                                <p style="margin: 5px 0;"><strong>Email ID:</strong> {{ email._id }}</p>
+                                <p style="margin: 5px 0;"><strong>Scam Report ID:</strong> {{ email.scam_report_id }}</p>
+                                <p style="margin: 5px 0;"><strong>Category:</strong> {{ email.category }}</p>
+                                <p style="margin: 5px 0;"><strong>To:</strong> {{ email.to_email }}</p>
+                                <p style="margin: 5px 0;"><strong>Subject:</strong> {{ email.subject|truncate(50) }}</p>
+                                <p style="margin: 5px 0;"><strong>Status:</strong> {{ email.status }}</p>
+                                <p style="margin: 5px 0;"><strong>Sent At:</strong> {{ email.sent_at }}</p>
+                            </div>
+                            {% else %}
+                            <p style="color: #555; text-align: center;">No emails found.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a href="/all_emails" style="background: #4285f4; color: white; padding: 10px 20px; border-radius: 3px; text-decoration: none; font-weight: bold;">Show More</a>
+                    </div>
+                </div>
+                <div>
+                    <h2 style="color: #333; margin-bottom: 15px;">Overview</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #87CEEB; color: white; padding: 15px; border-radius: 5px; text-align: center;" onmouseover="this.style.background='#E6E6FA'; this.style.color='#333';" onmouseout="this.style.background='#87CEEB'; this.style.color='white';">
+                            <h3 style="margin: 0 0 10px;">Total Scammers</h3>
+                            <p id="total-scammers" style="font-size: 24px; margin: 0;">0</p>
+                        </div>
+                        <div style="background: #FF4C4C; color: white; padding: 15px; border-radius: 5px; text-align: center; cursor: pointer;" onmouseover="this.style.background='#E6E6FA'; this.style.color='#333';" onmouseout="this.style.background='#FF4C4C'; this.style.color='white';" onclick="showHighRiskScammers()">
+                            <h3 style="margin: 0 0 10px;">High-Risk Scammers</h3>
+                            <p id="high-risk-scammers" style="font-size: 24px; margin: 0;">0</p>
+                        </div>
+                        <div style="background: #4CAF50; color: white; padding: 15px; border-radius: 5px; text-align: center;" onmouseover="this.style.background='#E6E6FA'; this.style.color='#333';" onmouseout="this.style.background='#4CAF50'; this.style.color='white';">
+                            <h3 style="margin: 0 0 10px;">Total Emails Sent</h3>
+                            <p id="total-emails" style="font-size: 24px; margin: 0;">0</p>
+                        </div>
+                        <div style="background: #FFA500; color: white; padding: 15px; border-radius: 5px; text-align: center;" onmouseover="this.style.background='#E6E6FA'; this.style.color='#333';" onmouseout="this.style.background='#FFA500'; this.style.color='white';">
+                            <h3 style="margin: 0 0 10px;">Recent Activity (7d)</h3>
+                            <p id="recent-activity" style="font-size: 24px; margin: 0;">0</p>
+                        </div>
+                    </div>
+                    <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <h3 style="color: #333; margin: 0 0 15px;">Risk Score Distribution</h3>
+                        <canvas id="riskChart" style="max-height: 200px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal for High-Risk Scammers -->
+            <div id="highRiskModal" class="modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal()">×</span>
+                    <h3 style="color: #333; margin-bottom: 15px;">High-Risk Scammers (Risk Score > 5)</h3>
+                    <div id="high-risk-details" style="display: flex; flex-direction: column; gap: 10px;">
+                        <p style="color: #555; text-align: center;">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal for Reports -->
+            <div id="reportsModal" class="modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeReportsModal()">×</span>
+                    <h3 style="color: #333; margin-bottom: 15px;">Generate Report</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label for="reportType" style="color: #333;">Select Report Type:</label>
+                        <select id="reportType" style="padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+                            <option value="scammers">Found Scammers</option>
+                            <option value="emails">Email Statistics</option>
+                        </select>
+                        <button onclick="generateReport()" style="padding: 8px 15px; background: #4caf50; color: white; border: none; border-radius: 3px; cursor: pointer;">Get Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="background: #222; color: white; text-align: center; padding: 10px 0; width: 100%; box-sizing: border-box;">
+        © 2025 Powered by Team Strategic Boosted Algorithms, contact at +91 9949284184
+    </footer>
+    <script>
+        let highRiskScammers = [];
+
+        function fetchOverviewData() {
+            // Fetch scammers data
+            fetch('/api/scammers')
+                .then(response => response.json())
+                .then(scammers => {
+                    const totalScammers = scammers.length;
+                    highRiskScammers = scammers.filter(s => s.risk_score > 5);
+                    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                    const recentScammers = scammers.filter(s => new Date(s.datetime) >= sevenDaysAgo).length;
+
+                    document.getElementById('total-scammers').textContent = totalScammers;
+                    document.getElementById('high-risk-scammers').textContent = highRiskScammers.length;
+
+                    // Calculate risk score distribution
+                    const riskBuckets = [0, 0, 0, 0, 0]; // Buckets for 0-2, 3-5, 6-10, 11-20, >20
+                    scammers.forEach(s => {
+                        if (s.risk_score <= 2) riskBuckets[0]++;
+                        else if (s.risk_score <= 5) riskBuckets[1]++;
+                        else if (s.risk_score <= 10) riskBuckets[2]++;
+                        else if (s.risk_score <= 20) riskBuckets[3]++;
+                        else riskBuckets[4]++;
+                    });
+
+                    // Render chart
+                    new Chart(document.getElementById('riskChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: ['0-2', '3-5', '6-10', '11-20', '>20'],
+                            datasets: [{
+                                label: 'Scammers by Risk Score',
+                                data: riskBuckets,
+                                backgroundColor: '#34495E',
+                                borderColor: '#2C3E50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: { beginAtZero: true, title: { display: true, text: 'Number of Scammers' } },
+                                x: { title: { display: true, text: 'Risk Score Range' } }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching scammers:', error);
+                    document.getElementById('total-scammers').textContent = 'Error';
+                    document.getElementById('high-risk-scammers').textContent = 'Error';
+                });
+
+            // Fetch emails data
+            fetch('/api/emails')
+                .then(response => response.json())
+                .then(emails => {
+                    const totalEmails = emails.length;
+                    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                    const recentEmails = emails.filter(e => new Date(e.sent_at) >= sevenDaysAgo).length;
+
+                    document.getElementById('total-emails').textContent = totalEmails;
+                    document.getElementById('recent-activity').textContent = recentEmails;
+                })
+                .catch(error => {
+                    console.error('Error fetching emails:', error);
+                    document.getElementById('total-emails').textContent = 'Error';
+                    document.getElementById('recent-activity').textContent = 'Error';
+                });
+        }
+
+        function showHighRiskScammers() {
+            const modal = document.getElementById('highRiskModal');
+            const detailsDiv = document.getElementById('high-risk-details');
+            if (highRiskScammers.length === 0) {
+                detailsDiv.innerHTML = '<p style="color: #555; text-align: center;">No high-risk scammers found.</p>';
+            } else {
+                detailsDiv.innerHTML = highRiskScammers.map(scammer => `
+                    <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 3px;" onmouseover="this.style.background='#E6E6FA'" onmouseout="this.style.background='#f9f9f9'">
+                        <p style="margin: 5px 0;"><strong>User:</strong> ${scammer.user}</p>
+                        <p style="margin: 5px 0;"><strong>Text:</strong> ${scammer.text.substring(0, 50)}${scammer.text.length > 50 ? '...' : ''}</p>
+                        <p style="margin: 5px 0;"><strong>Risk Score:</strong> ${scammer.risk_score}</p>
+                        <div style="margin-top: 10px;">
+                            <p style="margin: 5px 0;"><strong>UPI IDs:</strong> ${scammer.upi_ids.length ? scammer.upi_ids.join(', ') : 'None'}</p>
+                            <p style="margin: 5px 0;"><strong>Phones:</strong> ${scammer.phones.length ? scammer.phones.join(', ') : 'None'}</p>
+                            <p style="margin: 5px 0;"><strong>Account Numbers:</strong> ${scammer.account_numbers.length ? scammer.account_numbers.join(', ') : 'None'}</p>
+                            <p style="margin: 5px 0;"><strong>Socials:</strong> ${scammer.socials.length ? scammer.socials.join(', ') : 'None'}</p>
+                            <p style="margin: 5px 0;"><strong>Date:</strong> ${scammer.datetime}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('highRiskModal').style.display = 'none';
+        }
+
+        function showReportsModal() {
+            document.getElementById('reportsModal').style.display = 'block';
+        }
+
+        function closeReportsModal() {
+            document.getElementById('reportsModal').style.display = 'none';
+        }
+
+        function generateReport() {
+            const reportType = document.getElementById('reportType').value;
+            window.location.href = `/generate_report?type=${reportType}`;
+            closeReportsModal();
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const highRiskModal = document.getElementById('highRiskModal');
+            const reportsModal = document.getElementById('reportsModal');
+            if (event.target === highRiskModal) {
+                closeModal();
+            } else if (event.target === reportsModal) {
+                closeReportsModal();
+            }
+        };
+
+        // Call on page load
+        window.onload = fetchOverviewData;
+    </script>
+</body>
+</html>

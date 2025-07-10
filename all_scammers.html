@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Scammers</title>
+    <style>
+        #nav-toggle { display: none; }
+        #nav-toggle:checked ~ #nav-content { display: none; }
+        #nav-toggle:checked ~ #nav-pane { width: 50px; }
+    </style>
+</head>
+<body style="background: #f0f0f0; font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; box-sizing: border-box;">
+    <div style="display: flex; flex: 1; width: 100vw; box-sizing: border-box;">
+        <input type="checkbox" id="nav-toggle" style="display: none;">
+        <div id="nav-pane" style="width: 200px; background: #2C3E50; color: white; padding: 20px; min-height: 100%; box-sizing: border-box; transition: width 0.3s;">
+            <label for="nav-toggle" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer; margin-bottom: 20px; display: block;">☰</label>
+            <div id="nav-content">
+                <h3 style="margin: 0 0 20px; color: white;">Navigation</h3>
+                <a href="/dashboard" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Dashboard</a>
+                <a href="/all_scammers" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">All Scammers</a>
+                <a href="#" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Overview (Coming Soon)</a>
+                <a href="#" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Reports (Coming Soon)</a>
+            </div>
+        </div>
+        <div style="flex: 1; background: white; padding: 20px; overflow-y: auto; box-sizing: border-box;">
+            <h1 style="color: #333; text-align: center; margin-bottom: 20px;">All Scammers</h1>
+            <form action="/all_scammers" method="GET" style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="search" placeholder="Search by User, UPI, Phone, Account, or Social" style="width: 70%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" value="{{ search_query|default('') }}">
+                <button type="submit" style="padding: 8px 15px; background: #4caf50; color: white; border: none; border-radius: 3px; cursor: pointer;">Search</button>
+            </form>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                {% for scammer in scammers %}
+                <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 3px;" onmouseover="this.style.background='#E6E6FA'" onmouseout="this.style.background='#f9f9f9'">
+                    <p style="margin: 5px 0;"><strong>User:</strong> {{ scammer.user }}</p>
+                    <p style="margin: 5px 0;"><strong>Text:</strong> {{ scammer.text }}</p>
+                    <p style="margin: 5px 0;"><strong>Risk Score:</strong> {{ scammer.risk_score }}</p>
+                    <p style="margin: 5px 0;"><strong>UPI IDs:</strong> {{ scammer.upi_ids|join(', ') or 'None' }}</p>
+                    <p style="margin: 5px 0;"><strong>Phones:</strong> {{ scammer.phones|join(', ') or 'None' }}</p>
+                    <p style="margin: 5px 0;"><strong>Account Numbers:</strong> {{ scammer.account_numbers|join(', ') or 'None' }}</p>
+                    <p style="margin: 5px 0;"><strong>Socials:</strong> {{ scammer.socials|join(', ') or 'None' }}</p>
+                    <p style="margin: 5px 0;"><strong>Date:</strong> {{ scammer.datetime }}</p>
+                </div>
+                {% else %}
+                <p style="color: #555; text-align: center;">No scammers found.</p>
+                {% endfor %}
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="/dashboard" style="background: #4caf50; color: white; padding: 10px 20px; border-radius: 3px; text-decoration: none; font-weight: bold;">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+    <footer style="background: #222; color: white; text-align: center; padding: 10px 0; width: 100%; box-sizing: border-box;">
+        © 2025 Powered by Team Strategic Boosted Algorithms, contact at +91 9949284184
+    </footer>
+</body>
+</html>

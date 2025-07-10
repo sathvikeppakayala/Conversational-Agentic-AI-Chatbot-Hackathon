@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTO CRPC</title>
+</head>
+<body style="background: #f0f0f0; font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; box-sizing: border-box;">
+    <div id="app" style="max-width: 1200px; width: 100%; background: white; padding: 20px; flex: 1; margin: 20px auto; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); box-sizing: border-box;">
+        <!-- Populated by JavaScript -->
+    </div>
+    <footer style="background: #222; color: white; text-align: center; padding: 10px 0; width: 100%; box-sizing: border-box;">
+        © 2025 Powered by Team Strategic Boosted Algorithms, contact at +91 9949284184
+    </footer>
+    <script>
+        const app = document.getElementById('app');
+
+        function renderLogin() {
+            app.innerHTML = `
+                <h2 style="color: #333; text-align: center; margin-bottom: 20px;">AUTO CRPC Login</h2>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+                    <a href="/auth/google" style="background: #4285f4; color: white; padding: 10px; border-radius: 3px; text-decoration: none; font-weight: bold;">Login with Google</a>
+                    <a href="/auth/github" style="background: #333; color: white; padding: 10px; border-radius: 3px; text-decoration: none; font-weight: bold;">Login with GitHub</a>
+                    <a href="/auth/gmail" style="background: #d93025; color: white; padding: 10px; border-radius: 3px; text-decoration: none; font-weight: bold;">Login with Gmail</a>
+                </div>
+                <div style="border-top: 1px solid #ddd; padding-top: 20px;">
+                    <h3 style="color: #333; margin-bottom: 15px;">Login as Admin</h3>
+                    <form action="/login/admin" method="POST">
+                        <div style="margin-bottom: 15px; text-align: left;">
+                            <label for="username" style="display: block; color: #555;">Username</label>
+                            <input type="text" id="username" name="username" placeholder="admin" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+                        </div>
+                        <div style="margin-bottom: 15px; text-align: left;">
+                            <label for="password" style="display: block; color: #555;">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter password" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+                        </div>
+                        <div id="error" style="color: red; margin-bottom: 10px; display: none;"></div>
+                        <button type="submit" style="width: 100%; padding: 10px; background: #4caf50; color: white; border: none; border-radius: 3px; font-weight: bold; cursor: pointer;">Login as Admin</button>
+                    </form>
+                </div>
+            `;
+        }
+
+        function renderDashboard() {
+            app.innerHTML = `
+                <div style="display: flex; width: 100%; min-height: 100%; box-sizing: border-box;">
+                    <div id="nav-pane" style="width: 200px; background: #2C3E50; color: white; padding: 20px; min-height: 100%; box-sizing: border-box;">
+                        <h3 style="margin: 0 0 20px; color: white;">Navigation</h3>
+                        <a href="/dashboard" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Dashboard</a>
+                        <a href="/all_scammers" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">All Scammers</a>
+                        <a href="/all_emails" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">All Emails</a>
+                        <a href="#" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Overview (Coming Soon)</a>
+                        <a href="#" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Reports (Coming Soon)</a>
+                    </div>
+                    <div style="flex: 1; background: white; padding: 20px; overflow-y: auto; box-sizing: border-box;">
+                        <h1 style="color: #333; text-align: center; margin-bottom: 20px;">AUTO CRPC Dashboard</h1>
+                        <div style="margin-bottom: 20px; text-align: center;">
+                            <input type="text" id="search" placeholder="Search by User, UPI, Phone, Account, or Social" style="width: 70%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+                            <button onclick="fetchScammers()" style="padding: 8px 15px; background: #4caf50; color: white; border: none; border-radius: 3px; cursor: pointer;">Search</button>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <div style="max-height: 25vh; overflow-y: auto;">
+                                <h2 style="color: #333; margin-bottom: 15px;">Found Scammers</h2>
+                                <div id="scammers" style="display: flex; flex-direction: column; gap: 10px;">
+                                    <p style="color: #555; text-align: center;">Loading...</p>
+                                </div>
+                                <div style="text-align: center; margin-top: 10px;">
+                                    <a href="/all_scammers" style="background: #4285f4; color: white; padding: 10px 20px; border-radius: 3px; text-decoration: none; font-weight: bold;">Show More</a>
+                                </div>
+                            </div>
+                            <div style="max-height: 25vh; overflow-y: auto;">
+                                <h2 style="color: #333; margin-bottom: 15px;">Email Statistics</h2>
+                                <div id="emails" style="display: flex; flex-direction: column; gap: 10px;">
+                                    <p style="color: #555; text-align: center;">Loading...</p>
+                                </div>
+                                <div style="text-align: center; margin-top: 10px;">
+                                    <a href="/all_emails" style="background: #4285f4; color: white; padding: 10px 20px; border-radius: 3px; text-decoration: none; font-weight: bold;">Show More</a>
+                                </div>
+                            </div>
+                            <div style="flex: 1;">
+                                <h2 style="color: #333; margin-bottom: 15px;">Overview</h2>
+                                <p style="color: #555;">Overview metrics will be displayed here (Coming Soon).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            fetchScammers();
+            fetchEmails();
+        }
+
+        function fetchScammers() {
+            const searchQuery = document.getElementById('search').value;
+            const url = searchQuery ? `/api/scammers?search=${encodeURIComponent(searchQuery)}` : '/api/scammers';
+            fetch(url)
+                .then(response => response.json())
+                .then(scammers => {
+                    const scammersDiv = document.getElementById('scammers');
+                    if (scammers.length === 0) {
+                        scammersDiv.innerHTML = '<p style="color: #555; text-align: center;">No scammers found.</p>';
+                        return;
+                    }
+                    scammersDiv.innerHTML = scammers.slice(0, 10).map(scammer => `
+                        <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 3px;" onmouseover="this.style.background='#E6E6FA'" onmouseout="this.style.background='#f9f9f9'">
+                            <p style="margin: 5px 0;"><strong>User:</strong> ${scammer.user}</p>
+                            <p style="margin: 5px 0;"><strong>Text:</strong> ${scammer.text.substring(0, 50)}${scammer.text.length > 50 ? '...' : ''}</p>
+                            <p style="margin: 5px 0;"><strong>Risk Score:</strong> ${scammer.risk_score}</p>
+                            <div style="margin-top: 10px;">
+                                <p style="margin: 5px 0;"><strong>UPI IDs:</strong> ${scammer.upi_ids.length ? scammer.upi_ids.join(', ') : 'None'}</p>
+                                <p style="margin: 5px 0;"><strong>Phones:</strong> ${scammer.phones.length ? scammer.phones.join(', ') : 'None'}</p>
+                                <p style="margin: 5px 0;"><strong>Account Numbers:</strong> ${scammer.account_numbers.length ? scammer.account_numbers.join(', ') : 'None'}</p>
+                                <p style="margin: 5px 0;"><strong>Socials:</strong> ${scammer.socials.length ? scammer.socials.join(', ') : 'None'}</p>
+                                <p style="margin: 5px 0;"><strong>Date:</strong> ${scammer.datetime}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                })
+                .catch(error => {
+                    scammersDiv.innerHTML = '<p style="color: red; text-align: center;">Error loading scammers.</p>';
+                });
+        }
+
+        function fetchEmails() {
+            const url = '/api/emails';
+            fetch(url)
+                .then(response => response.json())
+                .then(emails => {
+                    const emailsDiv = document.getElementById('emails');
+                    if (emails.length === 0) {
+                        emailsDiv.innerHTML = '<p style="color: #555; text-align: center;">No emails found.</p>';
+                        return;
+                    }
+                    emailsDiv.innerHTML = emails.slice(0, 10).map(email => `
+                        <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 3px;" onmouseover="this.style.background='#E6E6FA'" onmouseout="this.style.background='#f9f9f9'">
+                            <p style="margin: 5px 0;"><strong>Email ID:</strong> ${email._id}</p>
+                            <p style="margin: 5px 0;"><strong>Scam Report ID:</strong> ${email.scam_report_id}</p>
+                            <p style="margin: 5px 0;"><strong>Category:</strong> ${email.category}</p>
+                            <p style="margin: 5px 0;"><strong>To:</strong> ${email.to_email}</p>
+                            <p style="margin: 5px 0;"><strong>Subject:</strong> ${email.subject.substring(0, 50)}${email.subject.length > 50 ? '...' : ''}</p>
+                            <p style="margin: 5px 0;"><strong>Status:</strong> ${email.status}</p>
+                            <p style="margin: 5px 0;"><strong>Sent At:</strong> ${email.sent_at}</p>
+                        </div>
+                    `).join('');
+                })
+                .catch(error => {
+                    emailsDiv.innerHTML = '<p style="color: red; text-align: center;">Error loading emails.</p>';
+                });
+        }
+
+        renderLogin();
+    </script>
+</body>
+</html>

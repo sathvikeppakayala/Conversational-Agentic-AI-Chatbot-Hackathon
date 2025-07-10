@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Emails</title>
+</head>
+<body style="background: #f0f0f0; font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; box-sizing: border-box;">
+    <div style="display: flex; flex: 1; width: 100vw; box-sizing: border-box;">
+        <div id="nav-pane" style="width: 200px; background: #2C3E50; color: white; padding: 20px; min-height: 100%; box-sizing: border-box;">
+            <h3 style="margin: 0 0 20px; color: white;">Navigation</h3>
+            <a href="/dashboard" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Dashboard</a>
+            <a href="/all_scammers" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">All Scammers</a>
+            <a href="/all_emails" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">All Emails</a>
+            <a href="#" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Overview (Coming Soon)</a>
+            <a href="#" style="display: block; color: white; padding: 10px; margin-bottom: 10px; background: #34495E; border-radius: 3px; text-decoration: none;">Reports (Coming Soon)</a>
+        </div>
+        <div style="flex: 1; background: white; padding: 20px; overflow-y: auto; box-sizing: border-box;">
+            <h1 style="color: #333; text-align: center; margin-bottom: 20px;">All Emails</h1>
+            <form action="/all_emails" method="GET" style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="search" placeholder="Search by Scam Report ID, Email, Subject, or Category" style="width: 70%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;" value="{{ search_query|default('') }}">
+                <button type="submit" style="padding: 8px 15px; background: #4caf50; color: white; border: none; border-radius: 3px; cursor: pointer;">Search</button>
+            </form>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                {% for email in emails %}
+                <div style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 3px;" onmouseover="this.style.background='#E6E6FA'" onmouseout="this.style.background='#f9f9f9'">
+                    <p style="margin: 5px 0;"><strong>Email ID:</strong> {{ email._id }}</p>
+                    <p style="margin: 5px 0;"><strong>Scam Report ID:</strong> {{ email.scam_report_id }}</p>
+                    <p style="margin: 5px 0;"><strong>Category:</strong> {{ email.category }}</p>
+                    <p style="margin: 5px 0;"><strong>To:</strong> {{ email.to_email }}</p>
+                    <p style="margin: 5px 0;"><strong>Subject:</strong> {{ email.subject }}</p>
+                    <p style="margin: 5px 0;"><strong>Status:</strong> {{ email.status }}</p>
+                    <p style="margin: 5px 0;"><strong>Sent At:</strong> {{ email.sent_at }}</p>
+                </div>
+                {% else %}
+                <p style="color: #555; text-align: center;">No emails found.</p>
+                {% endfor %}
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="/dashboard" style="background: #4caf50; color: white; padding: 10px 20px; border-radius: 3px; text-decoration: none; font-weight: bold;">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+    <footer style="background: #222; color: white; text-align: center; padding: 10px 0; width: 100%; box-sizing: border-box;">
+        © 2025 Powered by Team Strategic Boosted Algorithms, contact at +91 9949284184
+    </footer>
+</body>
+</html>
