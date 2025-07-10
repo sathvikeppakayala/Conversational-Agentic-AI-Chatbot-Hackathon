@@ -10,7 +10,7 @@ CONFIG = {
         "host": os.getenv("EMAIL_HOST", "smtp.gmail.com"),
         "port": int(os.getenv("EMAIL_PORT", 587)),
         "user": os.getenv("EMAIL_USER", "isronasaesa@gmail.com"),
-        "pass": os.getenv("EMAIL_PASS", "mbtz admz ifym kftb"),
+        "pass": os.getenv("EMAIL_PASS", "abcd#### aaka"),
         "imap_server": os.getenv("IMAP_SERVER", "imap.gmail.com")
     },
     "nodal_officers": {
@@ -21,6 +21,6 @@ CONFIG = {
     },
     "openrouter": {
         "base_url": "https://openrouter.ai/api/v1",
-        "api_key": os.getenv("OPENROUTER_API_KEY", "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")
+        "api_key": os.getenv("OPENROUTER_API_KEY", "MNOP")
     }
 }
