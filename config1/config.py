@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 CONFIG = {
-    "mongo_uri": os.getenv("MONGO_URI", "mongodb+srv://eppakayalasathvik72:CUqWKwrd4qxnvGE3@email.gecsw3e.mongodb.net/Phantom-Protocol"),
-    "email_transactions_mongo_uri": os.getenv("EMAIL_TRANSACTIONS_MONGO_URI", "mongodb+srv://eppakayalasathvik72:CUqWKwrd4qxnvGE3@email.gecsw3e.mongodb.net/email_transactions"),
+    "mongo_uri": os.getenv("MONGO_URI", "MONGO_URI"),
+    "email_transactions_mongo_uri": os.getenv("EMAIL_TRANSACTIONS_MONGO_URI", "MONGO_URI"),
     "email": {
         "host": os.getenv("EMAIL_HOST", "smtp.gmail.com"),
         "port": int(os.getenv("EMAIL_PORT", 587)),
